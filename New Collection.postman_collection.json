@@ -676,10 +676,10 @@
 			]
 		},
 		{
-			"name": "New Folder",
+			"name": "Cards",
 			"item": [
 				{
-					"name": "Create a Label on a Board Copy",
+					"name": "Create a card",
 					"event": [
 						{
 							"listen": "test",
@@ -689,12 +689,13 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Check name\", function () {\r",
+									"\r",
+									"pm.test(\"Check closed\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.name).to.contain(\"Red Label\");\r",
+									"    pm.expect(jsonData.closed).to.eql(false);\r",
 									"});\r",
 									"\r",
-									"pm.globals.set(\"Labelid\", pm.response.json().id);"
+									"pm.globals.set(\"Cardid\", pm.response.json().id);"
 								],
 								"type": "text/javascript"
 							}
@@ -703,26 +704,82 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "{{baseURL}}/1/boards/{{Boardid}}/labels?name=Red Label&color=red&key={{key}}&token={{token}}",
+							"raw": "{{baseURL}}/1/cards?idList={{Listid}}&key={{key}}&token={{token}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"1",
-								"boards",
-								"{{Boardid}}",
-								"labels"
+								"cards"
 							],
 							"query": [
 								{
-									"key": "name",
-									"value": "Red Label"
+									"key": "idList",
+									"value": "{{Listid}}"
 								},
 								{
-									"key": "color",
-									"value": "red"
+									"key": "key",
+									"value": "{{key}}"
 								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check closed\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.closed).to.eql(false);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/1/cards/{{Cardid}}?key={{key}}&token={{token}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"1",
+								"cards",
+								"{{Cardid}}"
+							],
+							"query": [
 								{
 									"key": "key",
 									"value": "{{key}}"
@@ -741,6 +798,61 @@
 		{
 			"name": "Delete",
 			"item": [
+				{
+					"name": "Delete a card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/1/cards/{{Cardid}}?&key={{key}}&token={{token}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"1",
+								"cards",
+								"{{Cardid}}"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": null
+								},
+								{
+									"key": "key",
+									"value": "{{key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Delete a board",
 					"event": [
